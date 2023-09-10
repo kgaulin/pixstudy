@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 
-export default function Toast(props: {
+export default function Toast({
+  message,
+  id,
+  type,
+  action,
+  remove,
+}: {
   message: string;
   id: string;
   type: "success" | "warning" | "negative";
@@ -8,11 +14,11 @@ export default function Toast(props: {
   remove: (id: string) => void;
 }) {
   useEffect(() => {
-    const t = setTimeout(() => props.remove(props.id), 3000);
+    const t = setTimeout(() => remove(id), 3000);
     return () => clearTimeout(t);
-  }, []);
+  }, [remove, id]);
 
-  const action = {
+  const template = {
     success: (
       <div className="inline-flex h-8 w-8  flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500">
         <svg
@@ -62,14 +68,14 @@ export default function Toast(props: {
       className="pointer-events-auto flex w-full min-w-[200px] max-w-xs  items-center rounded-lg bg-white p-4 text-gray-500 shadow "
       role="alert"
     >
-      {action[props.type]}
-      <div className="ml-3 text-sm font-normal">{props.message}</div>
-      {!!props.action && (
+      {template[type]}
+      <div className="ml-3 text-sm font-normal">{message}</div>
+      {!!action && (
         <button
           type="button"
           className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300"
           aria-label="Close"
-          onClick={props.action}
+          onClick={action}
         >
           <span className="sr-only">Close</span>
           <svg

@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
+import { Fragment } from "react";
 import CircleSpinner from "../loading/circleSpinner";
 
 export default function FormDialog({

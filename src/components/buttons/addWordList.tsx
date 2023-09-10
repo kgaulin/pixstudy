@@ -1,10 +1,12 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
+
+import type { ChangeEvent } from "react";
 import { HiPlusSmall } from "react-icons/hi2";
 import { api } from "~/utils/api";
 import { onEnterKey } from "~/utils/keyEventUtil";
 import FormDialog from "../dialogs/formDialog";
 
-export default function () {
+export default function AddWordList() {
   const [isOpen, setIsOpen] = useState(false);
 
   const [name, setName] = useState("");

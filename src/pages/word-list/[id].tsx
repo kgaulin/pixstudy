@@ -13,8 +13,8 @@ export default function WordListId() {
   const words = api.wordlyWords.getAll.useQuery({ id: id });
   const isStartButtonDisabled: boolean = (words.data?.length ?? 0) < 1;
   const gameSettingsMutation = api.wordlyGameSettings.create.useMutation({
-    onSuccess(data) {
-      router.push(`/games/wordly/${data.id}`);
+    async onSuccess(data) {
+      await router.push(`/games/wordly/${data.id}`);
     },
   });
 

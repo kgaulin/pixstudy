@@ -4,6 +4,7 @@ import { HiSpeakerWave, HiXMark } from "react-icons/hi2";
 import EndGame from "~/components/endGame";
 import Feedback from "~/components/feedback";
 import { useFocus } from "~/hooks/useFocus";
+import type { WordlySettings } from "~/types/wordlyTypes";
 import { api } from "~/utils/api";
 import { onChange, onEnterKey } from "~/utils/keyEventUtil";
 type Status = "success" | "error";
@@ -22,7 +23,7 @@ export default function WordlyGame() {
 
   const getSettings = useMemo(() => {
     return gameSettings.data?.settings;
-  }, [gameSettings.data?.settings.currentWord]);
+  }, [gameSettings.data?.settings]);
 
   const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(
     null
@@ -65,7 +66,7 @@ export default function WordlyGame() {
       return 100;
     }
 
-    let currentIndex: number =
+    const currentIndex: number =
       getSettings?.gameWords?.findIndex(
         (w) => w === getSettings?.currentWord
       ) ?? 0;
@@ -89,7 +90,7 @@ export default function WordlyGame() {
         getSettings.gameWords &&
         currentWordIndex < getSettings.gameWords.length - 1
       ) {
-        nextWord = getSettings?.gameWords[currentWordIndex + 1]!;
+        nextWord = getSettings.gameWords[currentWordIndex + 1]!;
       }
 
       const status =

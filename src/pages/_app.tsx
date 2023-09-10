@@ -1,5 +1,6 @@
 import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import { type AppType } from "next/app";
+import Link from "next/link";
 import { ToastContextProvider } from "~/components/toast/toast-context";
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
@@ -15,9 +16,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
               aria-label="Global"
             >
               <div className="flex lg:flex-1">
-                <a href="/" className="-m-1.5 p-1.5">
+                <Link href="/" className="-m-1.5 p-1.5">
                   <span className="text-2xl font-semibold">Wordly</span>
-                </a>
+                </Link>
               </div>
               <div className="flex flex-1 justify-end">
                 <UserButton afterSignOutUrl="/" />

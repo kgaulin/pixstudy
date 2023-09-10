@@ -34,7 +34,7 @@ export default function DeleteWordList({
     },
   });
 
-  const onDelete = async () => {
+  const onDelete = () => {
     deleteMutation.mutate({ id });
     onClick();
   };

@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function EndGame({
   correctlySpelledWords,
@@ -7,8 +7,6 @@ export default function EndGame({
   correctlySpelledWords: number;
   totalWords: number;
 }) {
-  const router = useRouter();
-
   return (
     <div className="absolute bottom-0 left-0 right-0 top-0">
       <div
@@ -23,12 +21,12 @@ export default function EndGame({
           réussie sur {totalWords}
         </h4>
 
-        <button
-          onClick={() => router.push("/")}
+        <Link
           className={`mb-4 mt-auto inline-flex items-center self-end rounded-md bg-indigo-600 px-4 py-3 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50`}
+          href={"/"}
         >
           Retour aux listes de mots
-        </button>
+        </Link>
       </div>
     </div>
   );

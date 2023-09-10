@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HiChevronRight } from "react-icons/hi2";
 import { api } from "~/utils/api";
 
-export default function () {
+export default function WordList() {
   const items = api.wordlyWordList.getAll.useQuery();
 
   return (

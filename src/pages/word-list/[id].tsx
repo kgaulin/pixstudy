@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { HiChevronLeft, HiPlay } from "react-icons/hi2";
 import MoreWordList from "~/components/buttons/moreWordList";
 import Words from "~/components/list/words";
+import type { WordlySettings } from "~/types/wordlyTypes";
 import { api } from "~/utils/api";
 
 export default function WordListId() {

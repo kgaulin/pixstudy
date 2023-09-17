@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { HiSpeakerWave, HiXMark } from "react-icons/hi2";
 import EndGame from "~/components/endGame";
 import Feedback from "~/components/feedback";
@@ -20,6 +20,10 @@ export default function WordlyGame() {
   const gameSettings = api.wordlyGameSettings.getOne.useQuery({ id: id });
   const settingsMutation = api.wordlyGameSettings.update.useMutation();
   const [inputRef, setInputFocus] = useFocus();
+  const [synth, setSynth] = useState<SpeechSynthesis | null>(null);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoices] =
+    useState<SpeechSynthesisVoice | null>(null);
 
   const getSettings = useMemo(() => {
     return gameSettings.data?.settings;
@@ -46,17 +50,24 @@ export default function WordlyGame() {
     };
   }, [gameSettings.data?.settings.currentWord]);
 
-  const handlePlay = () => {
-    const synth = window.speechSynthesis;
+  useEffect(() => {
+    const speechSynthesis = window.speechSynthesis;
+    const speechVoices = speechSynthesis
+      .getVoices()
+      .filter((v) => v.lang === "fr-CA");
+    setVoices(speechVoices);
+    setSelectedVoices(speechVoices[0] ?? null);
+    setSynth(speechSynthesis);
+  }, []);
 
+  const handlePlay = () => {
     if (utterance) {
-      const voices = synth.getVoices();
-      utterance.voice = voices.find((v) => v.lang === "fr-CA") ?? null;
+      utterance.voice = selectedVoice;
       utterance.lang = "fr-CA";
-      utterance.rate = 0.4;
+      utterance.rate = 0.7;
       utterance.pitch = 1;
       utterance.onerror = (e) => console.log(e);
-      synth.speak(utterance);
+      synth?.speak(utterance);
     }
     setInputFocus();
   };
@@ -77,8 +88,14 @@ export default function WordlyGame() {
 
   const progressPourcentage = calculateProgressPourcentage();
 
+  const changeSelectedVoice = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedVoices(
+      voices.find((v) => v.name === event.target.value) ?? null
+    );
+  };
+
   const validateWord = () => {
-    if (getSettings?.gameWords) {
+    if (getSettings?.gameWords && !showFeedback) {
       const currentWordIndex =
         getSettings.gameWords?.findIndex(
           (w) => w === getSettings.currentWord
@@ -98,7 +115,10 @@ export default function WordlyGame() {
           ? "finished"
           : "started";
 
-      if (word === getSettings.currentWord) {
+      if (
+        word.toLowerCase().trim() ===
+        getSettings.currentWord?.toLowerCase().trim()
+      ) {
         const newSettings: WordlySettings = {
           ...getSettings,
           currentWord: nextWord,
@@ -136,7 +156,6 @@ export default function WordlyGame() {
         setStatus("error");
       }
     }
-    setWord("");
   };
 
   if (gameSettings.isLoading) {
@@ -166,9 +185,33 @@ export default function WordlyGame() {
             ></div>
           </div>
         </div>
-        <h2 className="mt-8 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-          Quel est le mot nommé ?
-        </h2>
+        <div className="flex items-baseline gap-2">
+          <h2 className="mt-8 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            Quel est le mot nommé ?
+          </h2>
+          <label
+            htmlFor="voices"
+            className=" ml-auto text-sm font-medium text-gray-900"
+          >
+            Changer de voix
+          </label>
+          <select
+            id="voices"
+            onChange={changeSelectedVoice}
+            value={selectedVoice?.name}
+            className="rounded-lg border border-gray-300 bg-gray-50  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          >
+            {voices.map((v) => (
+              <option
+                key={v.name}
+                value={v.name}
+                selected={v.name === selectedVoice?.name}
+              >
+                {v.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="flex w-full flex-col items-center justify-center">
           <button
@@ -185,6 +228,7 @@ export default function WordlyGame() {
           </button>
           <input
             ref={inputRef}
+            autoComplete="off"
             autoFocus
             type="text"
             name="word"
@@ -209,7 +253,10 @@ export default function WordlyGame() {
       {showFeedback && (
         <Feedback
           status={status}
-          onNext={() => setShowFeedback(false)}
+          onNext={() => {
+            setShowFeedback(false);
+            setWord("");
+          }}
           currentWord={previousWord}
         ></Feedback>
       )}

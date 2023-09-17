@@ -14,7 +14,7 @@ export default function AddWord({ id }: { id: string }) {
   }
 
   const createWord = () => {
-    addWordMutation.mutate({ name, wordListId: id });
+    addWordMutation.mutate({ name: name.trim(), wordListId: id });
     setName("");
   };
 

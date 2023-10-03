@@ -18,7 +18,6 @@ export default function WordListId() {
   const words = api.wordlyWords.getAll.useQuery({ id: id });
   const lastestUnfinishGame = api.wordlyGameSettings.getLast.useQuery({
     wordListId: id,
-    status: "started",
   });
   const isStartButtonDisabled: boolean = (words.data?.length ?? 0) < 1;
   const gameSettingsMutation = api.wordlyGameSettings.create.useMutation({
@@ -41,7 +40,7 @@ export default function WordListId() {
   };
 
   const resumeGame = async () => {
-    if (lastestUnfinishGame.data != null) {
+    if (lastestUnfinishGame.data?.status === "started") {
       try {
         await router.push(`/games/wordly/${lastestUnfinishGame.data?.id}`);
       } catch (e) {}
@@ -73,7 +72,7 @@ export default function WordListId() {
               ></MoreWordList>
 
               <div className="ml-auto  flex  gap-5">
-                {!!lastestUnfinishGame.data && (
+                {lastestUnfinishGame.data?.status === "started" && (
                   <button
                     type="button"
                     className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

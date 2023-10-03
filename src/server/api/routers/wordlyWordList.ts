@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { and, eq, sql } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { wordlyWord, wordlyWordList } from "~/db/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -72,6 +72,7 @@ export const wordlyWordListRouter = createTRPCRouter({
       .from(wordlyWordList)
       .leftJoin(wordlyWord, eq(wordlyWord.wordListId, wordlyWordList.id))
       .groupBy(wordlyWordList.id)
+      .orderBy(desc(wordlyWordList.createdAt))
       .where(and(eq(wordlyWordList.userId, ctx.auth.userId)));
   }),
 });

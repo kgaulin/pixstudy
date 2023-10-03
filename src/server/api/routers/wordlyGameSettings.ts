@@ -57,24 +57,19 @@ export const wordlyGameSettingsRouter = createTRPCRouter({
     .input(
       z.object({
         wordListId: z.string(),
-        status: z.union([z.enum(["started", "finished"] as const), z.null()]),
       })
     )
     .query(async ({ input, ctx }) => {
-      const conditions = [
-        eq(wordlyGameSetting.wordListId, input.wordListId),
-        eq(wordlyGameSetting.userId, ctx.auth.userId),
-      ];
-
-      if (input.status != null) {
-        conditions.push(eq(wordlyGameSetting.status, input.status));
-      }
-
       const rows = await ctx.db
         .select()
         .from(wordlyGameSetting)
         .orderBy(desc(wordlyGameSetting.createdAt))
-        .where(and(...conditions))
+        .where(
+          and(
+            eq(wordlyGameSetting.wordListId, input.wordListId),
+            eq(wordlyGameSetting.userId, ctx.auth.userId)
+          )
+        )
         .limit(1);
 
       const row = rows[0];

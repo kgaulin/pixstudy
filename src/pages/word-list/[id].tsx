@@ -40,9 +40,11 @@ export default function WordListId() {
     }
   };
 
-  const resumeGame = async (): Promise<void> => {
+  const resumeGame = async () => {
     if (lastestUnfinishGame.data != null) {
-      await router.push(`/games/wordly/${lastestUnfinishGame.data?.id}`);
+      try {
+        await router.push(`/games/wordly/${lastestUnfinishGame.data?.id}`);
+      } catch (e) {}
     }
   };
 

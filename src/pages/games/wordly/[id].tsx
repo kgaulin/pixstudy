@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HiSpeakerWave, HiXMark } from "react-icons/hi2";
 import EndGame from "~/components/endGame";
 import Feedback from "~/components/feedback";

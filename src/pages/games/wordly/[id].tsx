@@ -22,6 +22,7 @@ export default function WordlyGame() {
   const [inputRef, setInputFocus] = useFocus();
   const [synth, setSynth] = useState<SpeechSynthesis | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [selectedVoice, setSelectedVoices] =
     useState<SpeechSynthesisVoice | null>(null);
 
@@ -56,17 +57,21 @@ export default function WordlyGame() {
       .getVoices()
       .filter((v) => v.lang === "fr-CA");
     setVoices(speechVoices);
-    setSelectedVoices(speechVoices[0] ?? null);
+    setSelectedVoices(
+      speechVoices.find((v) => v.name === "Amélie") ?? speechVoices[0] ?? null
+    );
     setSynth(speechSynthesis);
   }, []);
 
   const handlePlay = () => {
-    if (utterance) {
+    if (utterance && !isSpeaking) {
+      setIsSpeaking(true);
       utterance.voice = selectedVoice;
       utterance.lang = "fr-CA";
-      utterance.rate = 0.7;
+      utterance.rate = 0.3;
       utterance.pitch = 1;
       utterance.onerror = (e) => console.log(e);
+      utterance.onend = () => setIsSpeaking(false);
       synth?.speak(utterance);
     }
     setInputFocus();
@@ -216,7 +221,7 @@ export default function WordlyGame() {
         <div className="flex w-full flex-col items-center justify-center">
           <button
             onClick={handlePlay}
-            disabled={!getSettings?.currentWord}
+            disabled={!getSettings?.currentWord && isSpeaking}
             className={`
           mt-12
          inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  disabled:opacity-50`}

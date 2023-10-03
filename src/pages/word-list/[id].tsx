@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { HiChevronLeft, HiPlay } from "react-icons/hi2";
+import {
+  HiChevronLeft,
+  HiOutlineArrowUturnLeft,
+  HiPlay,
+} from "react-icons/hi2";
 import MoreWordList from "~/components/buttons/moreWordList";
 import Words from "~/components/list/words";
 import type { WordlySettings } from "~/types/wordlyTypes";
@@ -12,6 +16,10 @@ export default function WordListId() {
   const id = router.query.id as string;
   const wordList = api.wordlyWordList.getOne.useQuery({ id: id });
   const words = api.wordlyWords.getAll.useQuery({ id: id });
+  const lastestUnfinishGame = api.wordlyGameSettings.getLast.useQuery({
+    wordListId: id,
+    status: "started",
+  });
   const isStartButtonDisabled: boolean = (words.data?.length ?? 0) < 1;
   const gameSettingsMutation = api.wordlyGameSettings.create.useMutation({
     async onSuccess(data) {
@@ -29,6 +37,12 @@ export default function WordListId() {
         gameWords: wordsData.map((w) => w.name),
       };
       gameSettingsMutation.mutate({ wordListId: wordList.data!.id, settings });
+    }
+  };
+
+  const resumeGame = async (): Promise<void> => {
+    if (lastestUnfinishGame.data != null) {
+      await router.push(`/games/wordly/${lastestUnfinishGame.data?.id}`);
     }
   };
 
@@ -56,7 +70,18 @@ export default function WordListId() {
                 name={wordList.data?.name ?? ""}
               ></MoreWordList>
 
-              <div className="ml-auto  flex ">
+              <div className="ml-auto  flex  gap-5">
+                {!!lastestUnfinishGame.data && (
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    onClick={resumeGame}
+                  >
+                    <HiOutlineArrowUturnLeft className="h-6 w-6 text-gray-900"></HiOutlineArrowUturnLeft>
+                    Reprendre
+                  </button>
+                )}
+
                 <button
                   type="button"
                   disabled={isStartButtonDisabled}

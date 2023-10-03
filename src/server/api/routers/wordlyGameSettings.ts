@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { wordlyGameSetting } from "~/db/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -52,6 +52,33 @@ export const wordlyGameSettingsRouter = createTRPCRouter({
             eq(wordlyGameSetting.userId, ctx.auth.userId)
           )
         );
+    }),
+  getLast: protectedProcedure
+    .input(
+      z.object({
+        wordListId: z.string(),
+        status: z.union([z.enum(["started", "finished"] as const), z.null()]),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const conditions = [
+        eq(wordlyGameSetting.wordListId, input.wordListId),
+        eq(wordlyGameSetting.userId, ctx.auth.userId),
+      ];
+
+      if (input.status != null) {
+        conditions.push(eq(wordlyGameSetting.status, input.status));
+      }
+
+      const rows = await ctx.db
+        .select()
+        .from(wordlyGameSetting)
+        .orderBy(desc(wordlyGameSetting.createdAt))
+        .where(and(...conditions))
+        .limit(1);
+
+      const row = rows[0];
+      return row ?? null;
     }),
   getOne: protectedProcedure
     .input(z.object({ id: z.string() }))

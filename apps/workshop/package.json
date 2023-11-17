@@ -1,0 +1,37 @@
+{
+  "name": "@pixstudy/workshop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@pixstudy/ui": "workspace:^0.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "storybook": "^7.5.1",
+    "@storybook/react": "^7.5.1",
+    "@storybook/react-vite": "^7.5.1",
+    "@storybook/addon-links": "^7.5.1",
+    "@storybook/addon-essentials": "^7.5.1",
+    "@storybook/blocks": "^7.5.1",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/addon-interactions": "^7.5.1",
+    "@storybook/testing-library": "^0.2.2",
+    "@pixstudy/tailwind-config": "workspace:^0.1.0"
+  }
+}

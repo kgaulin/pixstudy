@@ -1,0 +1,4 @@
+{
+  "extends": "@pixstudy/tsconfig/base.json",
+  "include": ["routes"]
+}

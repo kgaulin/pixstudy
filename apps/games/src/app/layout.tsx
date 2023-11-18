@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import "@pixstudy/ui/style.css";
 import "~/styles/globals.css";
@@ -7,11 +7,6 @@ import "~/styles/globals.css";
 import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "./providers";
-
-const fontSans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 /**
  * Since we're passing `headers()` to the `TRPCReactProvider` we need to
@@ -38,12 +33,14 @@ export const metadata: Metadata = {
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
-        <TRPCReactProvider headers={headers()}>
-          {props.children}
-        </TRPCReactProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
+          <TRPCReactProvider headers={headers()}>
+            {props.children}
+          </TRPCReactProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

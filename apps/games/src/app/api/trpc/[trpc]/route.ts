@@ -1,9 +1,7 @@
+import type { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@pixstudy/api";
-import { auth } from "@pixstudy/auth";
-
-export const runtime = "edge";
 
 /**
  * Configure basic CORS headers
@@ -24,19 +22,21 @@ export function OPTIONS() {
   return response;
 }
 
-const handler = auth(async (req) => {
+const handler = async (request: NextRequest): Promise<Response> => {
   const response = await fetchRequestHandler({
+    req: request,
+    //   env is passed to the createContext function
+    createContext: () => createTRPCContext({ req: request }),
     endpoint: "/api/trpc",
     router: appRouter,
-    req,
-    createContext: () => createTRPCContext({ auth: req.auth, req }),
     onError({ error, path }) {
-      console.error(`>>> tRPC Error on '${path}'`, error);
+      console.error(`tRPC Error on '${path}'`, error);
     },
   });
 
   setCorsHeaders(response);
+
   return response;
-});
+};
 
 export { handler as GET, handler as POST };

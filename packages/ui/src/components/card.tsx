@@ -3,11 +3,11 @@ import * as React from "react";
 import { cn } from "../utils";
 
 const cardVariants = cva(
-  "ui-inline-flex ui-bg-transparent ui-p-2 ui-font-sans ui-justify-center ui-text-button-md  ui-border ",
+  "ui-inline-flex ui-font-sans ui-justify-center ui-text-button-md  ui-border ",
   {
     variants: {
       variant: {
-        default: "ui-shadow-sm ",
+        default: "ui-shadow-sm hover:ui-shadow-md",
         flat: " ui-shadow-none",
       },
     },

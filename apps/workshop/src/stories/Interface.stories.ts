@@ -18,6 +18,26 @@ const meta = {
       options: ["sm", "md", "lg"],
       control: { type: "select" },
     },
+    weight: {
+      options: ["normal", "bold", "medium"],
+      control: { type: "select" },
+    },
+    color: {
+      options: [
+        "primary",
+        "primary-light",
+        "primary-dark",
+        "dark",
+        "light",
+        "gray",
+        "gray-light",
+        "gray-dark",
+        "negative",
+        "positive",
+        "warning",
+      ],
+      control: { type: "select" },
+    },
   },
 } satisfies Meta<typeof Interface>;
 
@@ -31,6 +51,7 @@ export const Small: Story = {
   args: {
     size: "sm",
     children: "PixStudy.com",
+    weight: "medium",
   },
 };
 
@@ -38,6 +59,7 @@ export const Medium: Story = {
   args: {
     size: "md",
     children: "PixStudy.com",
+    weight: "medium",
   },
 };
 
@@ -45,5 +67,6 @@ export const Large: Story = {
   args: {
     size: "lg",
     children: "PixStudy.com",
+    weight: "medium",
   },
 };

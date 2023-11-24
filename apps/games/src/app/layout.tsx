@@ -5,6 +5,8 @@ import "@pixstudy/ui/style.css";
 import "~/styles/globals.css";
 
 import { headers } from "next/headers";
+import { frFR } from "@clerk/localizations";
+import { neobrutalism } from "@clerk/themes";
 
 import { TRPCReactProvider } from "./providers";
 
@@ -16,26 +18,30 @@ import { TRPCReactProvider } from "./providers";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
-  openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
-  },
+  title: "PixStudy",
+  description: "Application for kids learning and playing games",
 };
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      localization={frFR}
+      appearance={{
+        baseTheme: neobrutalism,
+        variables: {
+          colorPrimary: "#AE7AFF",
+          colorDanger: "#E99898",
+          colorSuccess: "#98E9AB",
+          colorWarning: "#FAE8A4",
+          colorText: "#000000",
+          colorTextOnPrimaryBackground: "#000000",
+          colorTextSecondary: "#000000",
+          colorBackground: "transparent",
+        },
+      }}
+    >
       <html lang="en">
-        <body>
+        <body className="min-h-screen bg-ground">
           <TRPCReactProvider headers={headers()}>
             {props.children}
           </TRPCReactProvider>

@@ -1,25 +1,49 @@
-import { Suspense } from "react";
+import Link from "next/link";
 
-import { Button } from "@pixstudy/ui";
+import { Card, Heading, Interface } from "@pixstudy/ui";
+
+import Nav from "./_components/nav";
 
 export const runtime = "edge";
 
 export default function HomePage() {
+  const games = [
+    {
+      name: "Exercice de vocabulaire",
+      description: "L'orthographe des mots",
+      category: "Francais",
+      level: "Primaire 2-6",
+      link: "/word-spelling",
+    },
+  ];
+
   return (
-    <main className="text-white flex h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-      <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-pink-400">T3</span> Turbo
-        </h1>
+    <>
+      <Nav></Nav>
 
-        <Button>PAtate</Button>
+      <main className="flex h-full flex-col items-center ">
+        <div className="container mt-4 flex flex-col justify-center px-8 py-8 md:px-0">
+          <Heading as="h1" className="my-4">
+            Jeux
+          </Heading>
 
-        <div className="h-[40vh] w-full max-w-2xl overflow-y-scroll">
-          <Suspense
-            fallback={<div className="flex w-full flex-col gap-4"></div>}
-          ></Suspense>
+          {games.map((game) => (
+            <Link href="/word-spelling" key={game.description}>
+              <Card className="flex h-80 w-80 cursor-pointer flex-col gap-4 bg-primary-light">
+                <div className="my-auto p-2">
+                  <Heading as="h4">{game.name}</Heading>
+                  <Interface weight="bold">{game.description}</Interface>
+                </div>
+
+                <div className="flex justify-between border-t border-dark bg-primary p-2">
+                  <Interface>{game.category}</Interface>
+                  <Interface>{game.level}</Interface>
+                </div>
+              </Card>
+            </Link>
+          ))}
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

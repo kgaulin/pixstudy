@@ -36,7 +36,7 @@ export default function Layout(props: { children: React.ReactNode }) {
           colorText: "#000000",
           colorTextOnPrimaryBackground: "#000000",
           colorTextSecondary: "#000000",
-          colorBackground: "transparent",
+          colorBackground: "#F9F4EF",
         },
       }}
     >

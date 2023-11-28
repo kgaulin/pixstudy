@@ -52,6 +52,7 @@ export const Small: Story = {
     size: "sm",
     children: "PixStudy.com",
     weight: "medium",
+    color: "dark",
   },
 };
 
@@ -60,6 +61,7 @@ export const Medium: Story = {
     size: "md",
     children: "PixStudy.com",
     weight: "medium",
+    color: "dark",
   },
 };
 
@@ -68,5 +70,6 @@ export const Large: Story = {
     size: "lg",
     children: "PixStudy.com",
     weight: "medium",
+    color: "dark",
   },
 };

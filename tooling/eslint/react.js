@@ -11,6 +11,10 @@ const config = {
   globals: {
     React: "writable",
   },
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    sourceType: "module",
+  },
   settings: {
     react: {
       version: "detect",

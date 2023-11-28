@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["custom/react"],
+  extends: ["@pixstudy/eslint-config/react"],
 };

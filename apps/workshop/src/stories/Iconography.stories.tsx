@@ -27,7 +27,7 @@ function Iconography() {
       <div
         className={`${
           showToast ? "opacity-100" : "opacity-0"
-        } bg-green-500 text-white text-sm fixed bottom-4 end-4 rounded-lg bg-light px-4 py-2 transition-all duration-500 ease-in-out`}
+        } text-sm fixed bottom-4 end-4   bg-primary px-4 py-2 text-light transition-all duration-500 ease-in-out`}
       >
         Copied to clipboard!
       </div>
@@ -71,6 +71,9 @@ function Iconography() {
           gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
           paddingTop: "32px",
           height: "100%",
+          margin: "0 auto",
+          justifyItems: "center",
+          alignItems: "center",
         }}
       >
         {items.map((name) => (
@@ -80,8 +83,11 @@ function Iconography() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "end",
               gap: "16px",
               cursor: "pointer",
+              width: "100px",
+              height: "100px",
             }}
             onClick={() => onClick(name)}
           >

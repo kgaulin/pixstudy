@@ -3,12 +3,12 @@ import * as React from "react";
 import { cn } from "../utils";
 
 const listVariants = cva(
-  "ui-font-sans ui-justify-center ui-text-button-md  ui-border ui-border-dark  ",
+  "font-sans justify-center text-button-md  border border-dark  ",
   {
     variants: {
       variant: {
-        default: "ui-shadow-sm hover:ui-shadow-md",
-        flat: " ui-shadow-none",
+        default: "shadow-sm hover:shadow-md",
+        flat: " shadow-none",
       },
     },
     defaultVariants: {
@@ -36,7 +36,7 @@ export function ListView<T extends {}>({
     <ul className={cn(listVariants({ variant, className }))}>
       {items.map((item) => (
         <li
-          className="ui-border-b ui-border-dark ui-p-4 last:ui-border-b-0"
+          className="border-b border-dark p-4 last:border-b-0"
           key={item[key] as string}
         >
           {renderItem(item)}

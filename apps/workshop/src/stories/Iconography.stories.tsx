@@ -91,7 +91,7 @@ function Iconography() {
             }}
             onClick={() => onClick(name)}
           >
-            <Icon className="height-8 width-8" icon={name} />
+            <Icon className="h-8 w-8 text-dark" icon={name} />
             <span className="text-sm">{name}</span>
           </button>
         ))}

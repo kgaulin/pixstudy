@@ -2,14 +2,14 @@ import { VariantProps, cva } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../utils";
 
-const headingVariants = cva("ui-text-dark", {
+const headingVariants = cva("text-dark", {
   variants: {
     as: {
-      h1: "ui-font-bold ui-text-heading-2xl",
-      h2: "ui-font-bold ui-text-heading-xl",
-      h3: "ui-font-bold ui-text-heading-lg",
-      h4: "ui-font-bold ui-text-heading-md",
-      h5: "ui-font-bold ui-text-heading-sm",
+      h1: "font-bold text-heading-2xl",
+      h2: "font-bold text-heading-xl",
+      h3: "font-bold text-heading-lg",
+      h4: "font-bold text-heading-md",
+      h5: "font-bold text-heading-sm",
     },
   },
   defaultVariants: {

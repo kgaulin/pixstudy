@@ -3,12 +3,12 @@ import * as React from "react";
 import { cn } from "../utils";
 
 const cardVariants = cva(
-  "ui-inline-flex ui-font-sans ui-justify-center ui-text-button-md  ui-border ",
+  "inline-flex font-sans justify-center text-button-md  border ",
   {
     variants: {
       variant: {
-        default: "ui-shadow-sm hover:ui-shadow-md",
-        flat: " ui-shadow-none",
+        default: "shadow-sm hover:shadow-md",
+        flat: " shadow-none",
       },
     },
     defaultVariants: {
@@ -20,10 +20,19 @@ const cardVariants = cva(
 export interface CardProps extends VariantProps<typeof cardVariants> {
   readonly children?: React.ReactNode;
   readonly className?: string;
+  readonly style?: React.CSSProperties;
 }
 
-export function Card({ className, variant, children }: CardProps): JSX.Element {
+export function Card({
+  className,
+  variant,
+  children,
+  style,
+}: CardProps): JSX.Element {
   return (
-    <div className={cn(cardVariants({ variant, className }))}> {children}</div>
+    <div className={cn(cardVariants({ variant, className }))} style={style}>
+      {" "}
+      {children}
+    </div>
   );
 }

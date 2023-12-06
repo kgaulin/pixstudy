@@ -29,6 +29,7 @@ import { db } from "@pixstudy/db";
  */
 interface CreateContextOptions {
   auth: SignedInAuthObject | SignedOutAuthObject;
+  profileId?: string;
 }
 
 /**
@@ -43,6 +44,7 @@ interface CreateContextOptions {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     auth: opts.auth,
+    profileId: opts.profileId,
     db,
   };
 };
@@ -52,8 +54,21 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: { req: RequestLike }) => {
-  return createInnerTRPCContext({ auth: getAuth(opts.req) });
+export const createTRPCContext = (opts: {
+  req: RequestLike;
+  profileId?: string;
+}) => {
+  return createInnerTRPCContext({
+    auth: getAuth(opts.req),
+    profileId: opts.profileId,
+  });
+};
+
+export const createServerTRPCContext = (opts: {
+  auth: SignedInAuthObject | SignedOutAuthObject;
+  profileId?: string;
+}) => {
+  return createInnerTRPCContext({ auth: opts.auth, profileId: opts.profileId });
 };
 
 /**
@@ -113,6 +128,22 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+const enforceUserIsAuthedAndProfile = t.middleware(({ ctx, next }) => {
+  if (!ctx.auth.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  if (!ctx.profileId) {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
+  return next({
+    ctx: {
+      auth: ctx.auth,
+      profileId: ctx.profileId,
+    },
+  });
+});
+
 /**
  * Protected (authed) procedure
  *
@@ -123,3 +154,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+export const protectedAndProfileProcedure = t.procedure.use(
+  enforceUserIsAuthedAndProfile,
+);

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
@@ -25,10 +26,14 @@ export function OPTIONS() {
 }
 
 const handler = async (request: NextRequest): Promise<Response> => {
+  const coookiesStore = cookies();
+  const profileCookie = coookiesStore.get("profile");
+
   const response = await fetchRequestHandler({
     req: request,
     //   env is passed to the createContext function
-    createContext: () => createTRPCContext({ req: request }),
+    createContext: () =>
+      createTRPCContext({ req: request, profileId: profileCookie?.value }),
     endpoint: "/api/trpc",
     router: appRouter,
     onError({ error, path }) {

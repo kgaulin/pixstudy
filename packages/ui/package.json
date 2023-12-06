@@ -25,6 +25,7 @@
     "react": "^18.2.0"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0",

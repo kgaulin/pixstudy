@@ -1,8 +1,12 @@
-import { postRouter } from "./router/post";
+import { profilesRouter } from "./router/profiles";
+import { wordSpellingListRouter } from "./router/wordSpellingList";
+import { wordSpellingWordRouter } from "./router/wordSpellingWord";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
-  post: postRouter,
+  profiles: profilesRouter,
+  wordSpellingList: wordSpellingListRouter,
+  wordSpellingWord: wordSpellingWordRouter,
 });
 
 // export type definition of API

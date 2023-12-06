@@ -1,19 +1,13 @@
-import { Button, Heading, Icon, ListView } from "@pixstudy/ui";
+import { Button, Heading, Icon } from "~/app/_components/ui";
+import { WordSpellingList } from "./_components/wordSpellingList";
 
 export const runtime = "edge";
 
 export default function WordSpellingpage() {
-  const items = [
-    { id: 1, name: "Liste 1" },
-    { id: 2, name: "Liste 2" },
-  ];
-
-  const renderItem = (item: (typeof items)[number]) => <div>{item.name}</div>;
-
   return (
     <main className="flex h-full flex-col items-center">
-      <div className="container mt-4 flex flex-col justify-center px-8 py-8 md:px-0">
-        <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+      <div className="container mt-4 flex flex-grow flex-col justify-center px-8 py-8 md:px-0">
+        <div className="flex items-center justify-between gap-2 ">
           <Heading as="h2" className="my-4">
             Mes listes de mots
           </Heading>
@@ -22,13 +16,7 @@ export default function WordSpellingpage() {
             <span>Créer une nouvelle liste</span>
           </Button>
         </div>
-        <ListView
-          className="mt-4 bg-light"
-          variant="flat"
-          items={items}
-          renderItem={renderItem}
-          key="id"
-        ></ListView>
+        <WordSpellingList></WordSpellingList>
       </div>
     </main>
   );

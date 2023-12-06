@@ -4,17 +4,19 @@ import React from "react";
 import { cn } from "../utils";
 
 const buttonVariants = cva(
-  "ui-inline-flex ui-items-center ui-font-sans ui-justify-center ui-text-button-sm disabled:ui-opacity-50 ui-border",
+  "inline-flex items-center font-sans justify-center text-button-sm disabled:opacity-50 border outline-none",
   {
     variants: {
       variant: {
         default:
-          "ui-bg-primary ui-shadow-sm enabled:hover:ui-shadow-md enabled:active:ui-shadow-lg",
-        flat: "ui-bg-transparent ui-shadow-none enabled:hover:ui-shadow-sm enabled:active:ui-shadow-md",
+          "bg-primary shadow-sm enabled:hover:shadow-md enabled:active:shadow-lg",
+        flat: "bg-transparent shadow-none enabled:hover:shadow-sm enabled:active:shadow-md",
+        none: "bg-transparent shadow-none enabled:hover:shadow-none enabled:active:shadow-none border-none",
       },
       shape: {
-        default: "ui-px-8 ui-py-4",
-        square: "ui-px-4 ui-py-4",
+        default: "px-8 py-4",
+        square: "px-4 py-4",
+        none: "px-0 py-0",
       },
     },
     defaultVariants: {

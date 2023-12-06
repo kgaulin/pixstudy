@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-import { Card, Heading, Interface } from "@pixstudy/ui";
-
+import { Card, Heading, Interface } from "~/app/_components/ui";
 import Nav from "./_components/nav";
 
 export const runtime = "edge";

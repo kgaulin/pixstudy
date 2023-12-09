@@ -17,26 +17,38 @@ const listVariants = cva(
   },
 );
 
-export interface ListViewProps<T extends {}>
+export interface ListViewProps<T extends {}, G extends {}>
   extends VariantProps<typeof listVariants> {
   readonly className?: string;
   readonly items: T[];
+  readonly pendingItem?: G;
+  readonly isPending?: boolean;
   readonly key: keyof T;
   readonly renderItem: (item: T) => React.ReactNode;
+  readonly renderPendingItem?: (item: G) => React.ReactNode;
 }
 
-export function ListView<T extends {}>({
+export function ListView<T extends {}, G extends {}>({
   className,
   variant,
   items,
+  pendingItem,
   renderItem,
+  renderPendingItem,
+  isPending,
   key,
-}: ListViewProps<T>): JSX.Element {
+}: ListViewProps<T, G>): JSX.Element {
   return (
     <ul className={cn(listVariants({ variant, className }))}>
+      {isPending && !!pendingItem && !!renderPendingItem && (
+        <li className="border-b border-dark last:border-b-0">
+          {renderPendingItem(pendingItem)}
+        </li>
+      )}
+
       {items.map((item) => (
         <li
-          className="border-b border-dark p-4 last:border-b-0"
+          className="border-b border-dark  last:border-b-0"
           key={item[key] as string}
         >
           {renderItem(item)}

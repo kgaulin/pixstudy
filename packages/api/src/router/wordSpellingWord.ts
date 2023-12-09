@@ -1,7 +1,8 @@
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import { and, eq, schema } from "@pixstudy/db";
+import { and, desc, eq, schema } from "@pixstudy/db";
+import { wordSpellingWord } from "@pixstudy/db/schema/wordSpelling";
 
 import { createTRPCRouter, protectedAndProfileProcedure } from "../trpc";
 
@@ -17,6 +18,7 @@ export const wordSpellingWordRouter = createTRPCRouter({
             input.wordSpellingListId,
           ),
         ),
+        orderBy: desc(wordSpellingWord.createdAt),
       });
     }),
 

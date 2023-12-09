@@ -4,7 +4,7 @@ import React from "react";
 import { cn } from "../utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center font-sans justify-center text-button-sm disabled:opacity-50 border outline-none",
+  "inline-flex items-center font-sans justify-center text-button-md disabled:opacity-50 border outline-none",
   {
     variants: {
       variant: {

@@ -1,12 +1,18 @@
 "use client";
 
+import Link from "next/link";
+
 import { Icon, Interface, ListView } from "~/app/_components/ui";
 import { api } from "~/utils/api";
 
 export const WordSpellingList = () => {
   const { data, isLoading } = api.wordSpellingList.all.useQuery();
   const renderItem = (item: NonNullable<typeof data>[number]) => (
-    <div key={item.id}>{item.name}</div>
+    <Link href={`/word-spelling/${item.id}`}>
+      <div key={item.id} className="p-4 hover:bg-primary">
+        {item.name}
+      </div>
+    </Link>
   );
 
   if (isLoading) {

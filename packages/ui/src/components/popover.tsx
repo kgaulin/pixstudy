@@ -13,7 +13,7 @@ export const Popover = ({ trigger, className, children }: PopoverProps) => (
     <PopoverRU.Portal>
       <PopoverRU.Content
         className={cn(
-          "p-5 w-[260px] bg-ground shadow-sm border border-dark focus:outline-none  will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade",
+          "min-w-[260px] border border-dark bg-ground p-5 shadow-sm will-change-[transform,opacity]  focus:outline-none data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=top]:animate-slideDownAndFade",
           className,
         )}
         collisionPadding={25}

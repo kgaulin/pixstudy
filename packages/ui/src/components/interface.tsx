@@ -47,7 +47,7 @@ export function Interface({
   children,
 }: InterfaceProps): JSX.Element {
   return (
-    <p className={cn(interfaceVariants({ size, weight, color, className }))}>
+    <p className={cn(interfaceVariants({ weight, color, size, className }))}>
       {children}
     </p>
   );

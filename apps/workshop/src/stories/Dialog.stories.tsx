@@ -14,14 +14,14 @@ const DialogWrapper = (props: any) => {
       open={open}
       onOpenChange={onOpenChange}
       title={props.title}
-      content={props.content}
-      target={document.body}
       trigger={
         <Button shape="default" variant="default" onClick={() => setOpen(true)}>
           Open
         </Button>
       }
-    ></Dialog>
+    >
+      {props.children}
+    </Dialog>
   );
 };
 
@@ -66,6 +66,6 @@ export const Primary: Story = {
   args: {
     open: false,
     title: "Dialog Title",
-    content: <div> Dialog Content</div>,
+    children: <div> Dialog Content</div>,
   },
 };
